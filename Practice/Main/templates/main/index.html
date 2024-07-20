@@ -1,0 +1,31 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+{#    <h1>Test</h1>#}
+{#    <img src="{% static 'main/img/user.png' %}" style="width: 100px;">#}
+{#    <h1>User status: {{ user }}</h1>#}
+{#    <h1>Bool status: {{ status }}</h1>#}
+    {% if '#' in title %}
+        <h1>Тег: {{ tag }}</h1>
+    {% elif 'Поиск' in title %}
+        <h1>Результат поиска по запросу: "{{ search }}"</h1>
+    {% endif %}
+    {% if data %}
+        {% for i in data %}
+            <div class="card">
+                <p class="line">{{ i.name }}</p>
+                <div class="content">
+                    <img src="{{ i.photo.url }}" style="width: 160px; height: 120px;">
+                    <p>{{ i.description|truncatewords:35 }}</p>
+                    <div class="link">
+                        <a href="{{ i.get_absolute_url }}">Информация</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>Пусто</h1>
+    {% endif %}
+    {% include 'includes/paginate.html' %}
+{% endblock %}

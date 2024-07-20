@@ -1,0 +1,25 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="info_line">
+        <p>Альбом: {{ data.album.name }} | Год: {{ data.album.year }}</p>
+    </div>
+    <div class="album_player">
+        <div class="left_ap">
+            {% if data.album.photo %}
+                <img src="{{ data.album.photo.url }}">
+            {% else %}
+                <img src="{% static 'main/img/logo-1.jpg' %}">
+            {% endif %}
+        </div>
+        <div class="right_ap">
+            {% for i in data.tracks %}
+                <p>{{ forloop.counter }}) {{ i.name }}<audio controls src="{{ i.url_path.url }}"></audio></p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="info_line">
+        <p>Группа: {{ data.album.band.name }} | Жанр: {{ data.album.band.genre.name }}</p>
+    </div>
+{% endblock %}

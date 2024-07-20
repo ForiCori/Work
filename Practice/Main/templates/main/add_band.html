@@ -1,0 +1,10 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+    <h1>Добавление новой группы</h1>
+    <form class="create" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p style="display: flex; justify-content: center; background: #1c1c1c; width: 100%"><button type="submit">Отправить</button></p>
+    </form>
+{% endblock %}

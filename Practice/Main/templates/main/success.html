@@ -1,0 +1,9 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+    <div class="success">
+        <h2>Успешно</h2>
+        <p>Данные были успешно добавлены и ожидают проверки администрацией</p>
+        <p><a href="{% url 'main' %}">На главную</a> </p>
+    </div>
+{% endblock %}

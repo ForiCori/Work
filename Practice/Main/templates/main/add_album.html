@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+
+{% block content %}
+    <h1>Добавление нового альбома</h1>
+    <form class="create" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if error %}
+            <h3 style="color: brown">Добавление данных не удалось</h3>
+        {% endif %}
+        {{ form_one.as_p }}
+        <ul>
+        {{ form_two.as_ul }}
+        </ul>
+        <p id="target" style="display: flex; justify-content: center; background: #1c1c1c; width: 100%; padding: 5px 0; margin-bottom: 0"><button onclick="plus()" type="button" id="button">Трек +</button></p>
+        <p style="display: flex; justify-content: center; background: #1c1c1c; width: 100%; padding: 5px 0; margin-top: 0"><button type="submit">Добавить альбом</button></p>
+    </form>
+{% endblock %}

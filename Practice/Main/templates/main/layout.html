@@ -1,0 +1,74 @@
+{% load static %}
+{% load main_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style_form.css' %}">
+    <script defer src="{% static 'main/js/main.js' %}"></script>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <section class="top">
+        <a href="{% url main.url_name %}"><img src="{% static 'main/img/logo-3.png' %}"></a>
+        <div class="navi">
+            {% if user.is_authenticated %}
+                {% for i in menu %}
+                    <a href="{% url i.url_name %}">{{ i.name }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="top login">
+            {% if not user.is_authenticated %}
+                {% for i in login %}
+                    <a href="{% url i.url_name %}">{{ i.name }}</a>
+                    {% if not forloop.last %}
+                        |
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>{{ user|capfirst }}</p><p>|</p>
+                <a href="{% url 'logout' %}">Выход</a>
+            {% endif %}
+        </div>
+    </section>
+    <section class="bottom">
+        <div class="left">
+            <form method="get" action="{% url 'search' %}">
+                <input type="text" name="search">
+                <button type="submit">Поиск</button>
+            </form>
+            <ul class="genres">
+                {% get_genres as genres %}
+                {% for i in genres %}
+                    {% if i.genre_status.count %}
+                        {% if i.name != title %}
+                            <li><a href="{{ i.get_absolute_url }}">{{ i.name }}</a></li>
+                        {% else %}
+                            <li style="background: brown">{{ i.name }}</li>
+                        {% endif %}
+                        {% if not forloop.last %}
+                            <hr/>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p class="tags">
+                {% get_tags as tags %}
+                {% for i in tags %}
+                    {% if i.tags_status.count %}
+                        <a href="{{ i.get_absolute_url }}">#{{ i.name }}</a>
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="right">
+            {% block content %}{% endblock %}
+        </div>
+    </section>
+</body>
+</html>

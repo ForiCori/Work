@@ -1,0 +1,32 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="info_line">
+        <p>{% for i in data.band.tags.all %}<a href="{{ i.get_absolute_url }}">#{{ i.name }}</a> {% endfor %}</p>
+    </div>
+    <div class="band_card">
+        <div class="left_bc">
+            <img src="{{ data.band.photo.url }}">
+        </div>
+        <div class="right_bc">
+            <p>{{ data.band.description }}</p>
+        </div>
+    </div>
+    <div class="info_line">
+        <p>Жанр: {{ data.band.genre.name }} | Год: {{ data.band.year }}</p>
+    </div>
+    <div class="album_card">
+        {% for i in data.albums %}
+            <div class="album_block">
+                {% if i.photo %}
+                    <img src="{{ i.photo.url }}">
+                {% else %}
+                    <img src="{% static 'main/img/logo-1.jpg' %}">
+                {% endif %}
+                <p><a href="{{ i.get_absolute_url }}">{{ i.name }}</a> </p>
+                <p>{{ i.year }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
